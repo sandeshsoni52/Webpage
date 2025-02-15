@@ -1,61 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Dropdowns</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 50px;
-            padding: 20px;
-        }
-        .dropdown-container {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        select {
-            padding: 5px;
-            width: 250px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Dynamic Dropdown Menus</h1>
-
-    <div class="dropdown-container">
-        <label for="program">Program:</label>
-        <select id="program" name="program" onchange="updateSchools()">
-            <option value="">Select Program</option>
-        </select>
-    </div>
-
-    <div class="dropdown-container">
-        <label for="school">School/College:</label>
-        <select id="school" name="school" onchange="updateDepartments()">
-            <option value="">Select School/College</option>
-        </select>
-    </div>
-
-    <div class="dropdown-container">
-        <label for="department">Department:</label>
-        <select id="department" name="department" onchange="updateCourses()">
-            <option value="">Select Department</option>
-        </select>
-    </div>
-
-    <div class="dropdown-container">
-        <label for="course">Course:</label>
-        <select id="course" name="course">
-            <option value="">Select Course</option>
-        </select>
-    </div>
-
-    <script>
-        const data = {
+[
+    {
+        "programs": {
             "undergraduate": {
                 "basicAppliedScience": {
                     "Dr.G.Y.PathrikarCollegeOfComputerScienceAndInformationTechnology": [
@@ -366,71 +311,6 @@
                     ]
                 }
             }
-        };
-
-        function updatePrograms() {
-            const programDropdown = document.getElementById('program');
-            for (let program in data) {
-                let option = document.createElement('option');
-                option.value = program;
-                option.textContent = program.charAt(0).toUpperCase() + program.slice(1);
-                programDropdown.appendChild(option);
-            }
         }
-
-        function updateSchools() {
-            const program = document.getElementById('program').value;
-            const schoolDropdown = document.getElementById('school');
-            schoolDropdown.innerHTML = '<option value="">Select School/College</option>';
-
-            if (program) {
-                for (let school in data[program]) {
-                    let option = document.createElement('option');
-                    option.value = school;
-                    option.textContent = school.replace(/([A-Z])/g, ' $1').trim();
-                    schoolDropdown.appendChild(option);
-                }
-            }
-            updateDepartments();
-        }
-
-        function updateDepartments() {
-            const program = document.getElementById('program').value;
-            const school = document.getElementById('school').value;
-            const departmentDropdown = document.getElementById('department');
-            departmentDropdown.innerHTML = '<option value="">Select Department</option>';
-
-            if (school) {
-                for (let department in data[program][school]) {
-                    let option = document.createElement('option');
-                    option.value = department;
-                    option.textContent = department.replace(/([A-Z])/g, ' $1').trim();
-                    departmentDropdown.appendChild(option);
-                }
-            }
-            updateCourses();
-        }
-
-        function updateCourses() {
-            const program = document.getElementById('program').value;
-            const school = document.getElementById('school').value;
-            const department = document.getElementById('department').value;
-            const courseDropdown = document.getElementById('course');
-            courseDropdown.innerHTML = '<option value="">Select Course</option>';
-
-            if (department) {
-                data[program][school][department].forEach(course => {
-                    let option = document.createElement('option');
-                    option.value = course;
-                    option.textContent = course;
-                    courseDropdown.appendChild(option);
-                });
-            }
-        }
-
-        window.onload = function() {
-            updatePrograms();
-        }
-    </script>
-</body>
-</html>
+    }
+]
